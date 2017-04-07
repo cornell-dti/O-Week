@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
-from .models import EventDetail, Category
+from .models import EventDetail, Category, EventDetailForm
 
 # Create your views here.
 
@@ -11,10 +11,10 @@ def index(request):
 def feed(request, day, req_category = "none"):
 	if req_category == "none":
 		#returns eveything for storage on the app -> do we want to change this to a refreshing one
-		event_set = EventDetail.objects.filter(start_date__date = str(day)) #because its a five day event
+		event_set = EventDetail.objects.filter(start_date__day = str(day)) #because its a five day event
 	else:
 		cat_object = Category.objects.filter(category = req_category)
-		event_set = EventDetail.objects.filter(start_date__date = str(day)).filter(category = cat_object)
+		event_set = EventDetail.objects.filter(start_date__day = str(day)).filter(category = cat_object)
 	return JsonResponse(list(event_set.order_by('start_time', 'name')), safe = False)
 	
 def event_details(request, event_id):
@@ -26,4 +26,11 @@ def categories(request):
 	return JsonResponse(list(category_set), safe = False)
 	
 def add_event(request):
-	return ""
+	if request.method == 'POST':
+		form = EventDetailForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/thanks/')
+	else:
+		form = EventDetailForm()
+	return render(request, 'add.html', {'form': form})

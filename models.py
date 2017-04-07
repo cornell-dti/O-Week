@@ -1,11 +1,15 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.forms import ModelForm
 
 """ """	
 class Category(models.Model):
 	category = models.CharField(max_length = 24, primary_key = True)
 	description = models.TextField(max_length = 256)
+	
+	def __str__(self):
+		return self.category
 
 """ """	
 class Tag(models.Model):
@@ -46,6 +50,12 @@ class EventTags(models.Model):
 	#primary key is the set of columns {eventID,tag}
 	eventID = models.ForeignKey(EventDetail, on_delete = models.CASCADE)
 	tag = models.ForeignKey(Tag) #cascade?
+	
+class EventDetailForm(ModelForm):
+	class Meta:
+		model = EventDetail
+		fields = ['name', 'description', 'location', 'category', 'images',
+				  'start_date', 'end_date', 'start_time', 'end_time']
 
 #################### REMOVED #########################################
 
