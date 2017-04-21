@@ -15,6 +15,9 @@ class Category(models.Model):
 class Tag(models.Model):
 	tag = models.CharField(max_length = 24, primary_key = True)
 	description = models.TextField(max_length = 256)
+	
+	def __str__(self):
+		return self.tag
 
 """ """
 class Organization(models.Model):
@@ -25,6 +28,9 @@ class Organization(models.Model):
 	contact = models.TextField() #todo
 	image = models.ImageField(upload_to = "organizer_images") #todo
 	links = models.SlugField()
+	
+	def __str__(self):
+		return self.name
 
 """ """
 class EventDetail(models.Model):
@@ -44,12 +50,20 @@ class EventDetail(models.Model):
 	end_date = models.DateField()
 	start_time = models.TimeField()
 	end_time = models.TimeField()
+	
+	def __str__(self):
+		return self.name + ", LOC: " + self.location + " AT: " + self.start_date + "," + self.start_time
 
 """ """	
 class EventTags(models.Model):
 	#primary key is the set of columns {eventID,tag}
 	eventID = models.ForeignKey(EventDetail, on_delete = models.CASCADE)
-	tag = models.ForeignKey(Tag) #cascade?
+	tag = models.ForeignKey(Tag, on_delete = models.CASCADE)
+
+class EventCategories(models.Model):
+	#primary key is the set of columns {eventID,category}
+	eventID = models.ForeignKey(EventDetail, on_delete = models.CASCADE) #is this ID?
+	category = models.ForeignKey(Category, on_delete = models.CASCADE)
 	
 class EventDetailForm(ModelForm):
 	class Meta:
