@@ -1,20 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
-from .models import EventDetail, Category, EventDetailForm
-
-# Create your views here.
+from .models import EventDetail, Category, EventDetailForm, EventCategories
 
 def index(request):
     return JsonResponse("Hello, world. You're at the flow index.", safe = False)
 
-def feed(request, day, req_category = "none"):
-	if req_category == "none":
+#need to alter to handle separate category table
+def feed(request, day, req_category = "NONE"):
+	if req_category.lower() == "none":
 		#returns eveything for storage on the app -> do we want to change this to a refreshing one
 		event_set = EventDetail.objects.filter(start_date__day = str(day)) #because its a five day event
 	else:
 		cat_object = Category.objects.filter(category = req_category)
-		event_set = EventDetail.objects.filter(start_date__day = str(day)).filter(category = cat_object)
+		corr_events = EventCategories.filter(category = cat_object).values_list()
+		event_set = EventDetail.objects.none()
+		for event in corr_events:
+			spec_event = EventDetail.objects.filter(start_date__day = str(day)).filter(id = event)
+			event_set.union(spec_event)
 	return JsonResponse(list(event_set.order_by('start_time', 'name')), safe = False)
 	
 def event_details(request, event_id):
