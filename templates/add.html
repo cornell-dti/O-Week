@@ -1,4 +1,4 @@
-<form action="/flow/add_event/" method="post">
+<form action="/flow/add_event/" method="post" enctype="multipart/form-data" data-ajax="false">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit" />

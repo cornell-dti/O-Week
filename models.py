@@ -8,8 +8,8 @@ class Category(models.Model):
 	category = models.CharField(max_length = 24, primary_key = True)
 	description = models.TextField(max_length = 256)
 	
-	def __str__(self):
-		return self.category
+	#def __str__(self):
+	#	return self.category
 
 """ """	
 class Tag(models.Model):
@@ -51,8 +51,8 @@ class EventDetail(models.Model):
 	start_time = models.TimeField()
 	end_time = models.TimeField()
 	
-	def __str__(self):
-		return self.name + ", LOC: " + self.location + " AT: " + self.start_date + "," + self.start_time
+	#def __str__(self):
+		#return self.name + ", LOC: " #+ self.location + " AT: " + self.start_date + "," + self.start_time
 
 """ """	
 class EventTags(models.Model):
