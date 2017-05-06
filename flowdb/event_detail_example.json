@@ -1,0 +1,11 @@
+{
+	"pk": 3,
+	"name": "New Student Check In",
+	"description": "You are required to attend New Student Check-In to pick up your Cornell ID Card. If your move-in time is 2:00pm\u20135:00pm, plan to attend New Student Check-In before moving in. Staff members from several departments will be available to answer questions and share information about the wealth of programs and services offered at the university. Families are welcome.",
+	"location": "Bartels Hall",
+	"category": "Trial",
+	"start_date": "2017-08-19",
+	"end_date": "2017-08-19",
+	"start_time": "09:00:00",
+	"end_time": "17:00:00"
+}

@@ -1,0 +1,42 @@
+{
+    "id": "",
+    "properties": {
+        "pk": {
+            "id": "/items/properties/pk",
+            "type": "integer"
+        },
+        "name": {
+             "id": "/items/properties/name",
+            "type": "string"
+        },
+        "description": {
+            "id": "/items/properties/description",
+            "type": "string"
+        },
+        "location": {
+             "id": "/items/properties/location",
+            "type": "string"
+        },
+        "category": {
+            "id": "/items/properties/category",
+            "type": "string"
+        },
+        "start_date": {
+            "id": "/items/properties/start_date",
+            "type": "string"
+        },
+        "end_date": {
+            "id": "/items/properties/end_date",
+            "type": "string"
+        },
+        "start_time": {
+            "id": "/items/properties/start_time",
+            "type": "string"
+        },
+        "end_time": {
+            "id": "/items/properties/end_time",
+            "type": "string"
+        }
+    },
+    "type": "object"
+}
