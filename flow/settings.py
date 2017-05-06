@@ -32,10 +32,10 @@ DATABASES = {
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#8$jrs3hei9bybabvb2f4z7ogu@f=0=^+%b0wly496r*a%3%cn'
+#SECRET_KEY = '#8$jrs3hei9bybabvb2f4z7ogu@f=0=^+%b0wly496r*a%3%cn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
