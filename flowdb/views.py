@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializers import EventSerializer, CategorySerializer
-from .models import EventDetail, Category, EventDetailForm, EventCategories
+from .models import EventDetail, Category, EventCategories, EventDetailForm, CategoriesForm
 from .forms import BulkUploadForm
 from wsgiref.util import FileWrapper
 from django.conf import settings
@@ -95,3 +95,13 @@ def add_event(request):
 	else:
 		form = EventDetailForm()
 	return render(request, 'add.html', {'form': form})
+
+def add_category(request):
+	if request.method == 'POST':
+		form = CategoriesForm(request.POST, request.FILES)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/thanks/')
+	else:
+		form = CategoriesForm()
+	return render(request, 'addCategory.html', {'form': form})

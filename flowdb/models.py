@@ -70,6 +70,11 @@ class EventDetailForm(ModelForm):
 		model = EventDetail
 		fields = ['name', 'description', 'location', 'category', 'images',
 				  'start_date', 'end_date', 'start_time', 'end_time']
+		
+class CategoriesForm(ModelForm):
+	class Meta:
+		model = Category
+		fields = ['category', 'description']
 
 #################### REMOVED #########################################
 

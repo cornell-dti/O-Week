@@ -11,4 +11,5 @@ urlpatterns = [
 	url(r'^categories/$', views.categories, name='categories'),
 	url(r'^add_event/$', views.add_event, name='add'),
     url(r'^bulk_add_event/$', views.bulk_add, name='bulk add'),
+	url(r'^add_category/$', views.add_category, name='add category'),
 ]
