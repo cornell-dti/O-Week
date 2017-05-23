@@ -42,6 +42,7 @@ class EventDetail(models.Model):
 	#price = models.DecimalField(decimal_places = 2)
 	category = models.ForeignKey(Category) #cascade?
 	generated = models.DateTimeField(auto_now = True)
+	required = models.BooleanField(default = False)
 	#thumbnail = model.ImageField(upload_to = "") #todo
 	
 	#Added post table alterations
@@ -68,7 +69,7 @@ class EventCategories(models.Model):
 class EventDetailForm(ModelForm):
 	class Meta:
 		model = EventDetail
-		fields = ['name', 'description', 'location', 'category', 'images',
+		fields = ['name', 'description', 'location', 'category', 'required', 'images',
 				  'start_date', 'end_date', 'start_time', 'end_time']
 		
 class CategoriesForm(ModelForm):
