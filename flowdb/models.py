@@ -66,6 +66,9 @@ class EventCategories(models.Model):
 	eventID = models.ForeignKey(EventDetail, on_delete = models.CASCADE) #is this ID?
 	category = models.ForeignKey(Category, on_delete = models.CASCADE)
 	
+	def __str__(self):
+		return eventID
+	
 class EventDetailForm(ModelForm):
 	class Meta:
 		model = EventDetail
