@@ -8,8 +8,8 @@ class Category(models.Model):
 	category = models.CharField(max_length = 24, primary_key = True)
 	description = models.TextField(max_length = 256)
 	
-	#def __str__(self):
-	#	return self.category
+	def __str__(self):
+		return self.category
 
 """ """	
 class Tag(models.Model):
@@ -65,9 +65,6 @@ class EventCategories(models.Model):
 	#primary key is the set of columns {eventID,category}
 	eventID = models.ForeignKey(EventDetail, on_delete = models.CASCADE) #is this ID?
 	category = models.ForeignKey(Category, on_delete = models.CASCADE)
-	
-	def __str__(self):
-		return eventID
 	
 class EventDetailForm(ModelForm):
 	class Meta:
