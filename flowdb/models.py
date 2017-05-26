@@ -69,7 +69,7 @@ class EventCategories(models.Model):
 class EventDetailForm(ModelForm):
 	class Meta:
 		model = EventDetail
-		fields = ['name', 'description', 'location', 'category', 'image', 'required',
+		fields = ['name', 'description', 'location', 'category', 'images', 'required',
 				  'start_date', 'end_date', 'start_time', 'end_time']
 		
 class CategoriesForm(ModelForm):
