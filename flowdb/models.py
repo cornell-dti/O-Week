@@ -46,7 +46,7 @@ class EventDetail(models.Model):
 	#thumbnail = model.ImageField(upload_to = "") #todo
 	
 	#Added post table alterations
-	#images = models.ImageField(upload_to = "event_images") 
+	images = models.ImageField(upload_to = "event_images") 
 	start_date = models.DateField()
 	end_date = models.DateField()
 	start_time = models.TimeField()
@@ -69,7 +69,7 @@ class EventCategories(models.Model):
 class EventDetailForm(ModelForm):
 	class Meta:
 		model = EventDetail
-		fields = ['name', 'description', 'location', 'category', 'required',
+		fields = ['name', 'description', 'location', 'category', 'image', 'required',
 				  'start_date', 'end_date', 'start_time', 'end_time']
 		
 class CategoriesForm(ModelForm):
