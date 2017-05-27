@@ -32,7 +32,6 @@ def feed(request, day, req_category = "NONE"):
             allDetails = EventDetail.objects.filter(start_date__day = str(day))
             for event in corr_events:
                 spec_event = allDetails.filter(id = event)
-                print spec_event
                 event_set.union(spec_event)
             
         serializer = EventSerializer(event_set, many = True)
@@ -83,6 +82,11 @@ def bulk_add(request):
 				event.start_time = row[6]
 				event.end_time = row[7]
 				event.save()
+				
+				#EventCategories
+				eventCat = EventCategories()
+				eventCat.eventID = event
+				eventCat.category = cat_object
 	else:
 		form = BulkUploadForm()
 	return render(request, 'bulk_add.html', {'form': form})
