@@ -29,8 +29,10 @@ def feed(request, day, req_category = "NONE"):
             cat_object = Category.objects.filter(category = req_category)
             corr_events = EventCategories.objects.filter(category = cat_object).values_list()
             event_set = EventDetail.objects.none()
+            allDetails = EventDetail.objects.filter(start_date__day = str(day))
             for event in corr_events:
-                spec_event = EventDetail.objects.filter(start_date__day = str(day)).filter(id = event)
+                spec_event = allDetails.filter(id = event)
+                print spec_event
                 event_set.union(spec_event)
             
         serializer = EventSerializer(event_set, many = True)
