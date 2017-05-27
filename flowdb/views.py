@@ -27,7 +27,7 @@ def feed(request, day, req_category = "NONE"):
             event_set = EventDetail.objects.filter(start_date__day = str(day)) #because its a five day event
         else:
             cat_object = Category.objects.filter(category = req_category)
-            corr_events = EventCategories.filter(category = cat_object).values_list()
+            corr_events = EventCategories.objects.filter(category = cat_object).values_list()
             event_set = EventDetail.objects.none()
             for event in corr_events:
                 spec_event = EventDetail.objects.filter(start_date__day = str(day)).filter(id = event)
