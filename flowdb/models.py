@@ -52,8 +52,8 @@ class EventDetail(models.Model):
 	start_time = models.TimeField()
 	end_time = models.TimeField()
 	
-	#def __str__(self):
-		#return self.name + ", LOC: " #+ self.location + " AT: " + self.start_date + "," + self.start_time
+	def __str__(self):
+		return self.name + " (" + self.start_date + ")"
 
 """ """	
 class EventTags(models.Model):
@@ -61,10 +61,16 @@ class EventTags(models.Model):
 	eventID = models.ForeignKey(EventDetail, on_delete = models.CASCADE)
 	tag = models.ForeignKey(Tag, on_delete = models.CASCADE)
 
+	def __str__(self):
+		return eventID.name + "," + tag.tag
+
 class EventCategories(models.Model):
 	#primary key is the set of columns {eventID,category}
 	eventID = models.ForeignKey(EventDetail, on_delete = models.CASCADE) #is this ID?
 	category = models.ForeignKey(Category, on_delete = models.CASCADE)
+
+	def __str__(self):
+		return eventID.name + "," + category.category
 	
 class EventDetailForm(ModelForm):
 	class Meta:
@@ -77,7 +83,7 @@ class CategoriesForm(ModelForm):
 		model = Category
 		fields = ['category', 'description']
 
-#################### REMOVED #########################################
+################################ REMOVED #########################################
 
 """ Removed. Not necessary to have a secondary table for event timings
 because of the clustered nature of events. A second table with only this information
