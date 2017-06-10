@@ -15,7 +15,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializers import EventSerializer, CategorySerializer
-from .models import EventDetail, Category, EventCategories
+from .models import EventDetail, Category
 from .forms import BulkUploadForm, EventDetailForm, CategoriesForm
 
 def index(request):
