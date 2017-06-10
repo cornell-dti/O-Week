@@ -53,7 +53,7 @@ class EventDetail(models.Model):
 	end_time = models.TimeField()
 	
 	def __str__(self):
-		return self.name + " (" + self.start_date + ")"
+		return self.name + " (" + self.start_date.strftime('%m/%d/%Y') + ")"
 
 """ """	
 class EventTags(models.Model):
