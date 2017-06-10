@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.forms import ModelForm
 
 """ """	
 class Category(models.Model):
@@ -20,30 +19,14 @@ class Tag(models.Model):
 		return self.tag
 
 """ """
-class Organization(models.Model):
-	# PK (id) automatically added
-	name = models.CharField(max_length = 128)
-	description = models.TextField(max_length = 1024, blank = True)
-	owner = models.EmailField()
-	contact = models.TextField() #todo
-	image = models.ImageField(upload_to = "organizer_images") #todo
-	links = models.SlugField()
-	
-	def __str__(self):
-		return self.name
-
-""" """
 class EventDetail(models.Model):
 	# PK (id) automatically added
 	name = models.CharField(max_length = 128)
-	#organization = models.ForeignKey(Organization) #cascade?
 	description = models.TextField(max_length = 1024, blank = True)
 	location = models.TextField(max_length = 256)
-	#price = models.DecimalField(decimal_places = 2)
 	category = models.ForeignKey(Category) #cascade?
 	generated = models.DateTimeField(auto_now = True)
 	required = models.BooleanField(default = False)
-	#thumbnail = model.ImageField(upload_to = "") #todo
 	
 	#Added post table alterations
 	images = models.ImageField(upload_to = "event_images") 
@@ -63,25 +46,6 @@ class EventTags(models.Model):
 
 	def __str__(self):
 		return eventID.name + "," + tag.tag
-
-class EventCategories(models.Model):
-	#primary key is the set of columns {eventID,category}
-	eventID = models.ForeignKey(EventDetail, on_delete = models.CASCADE) #is this ID?
-	category = models.ForeignKey(Category, on_delete = models.CASCADE)
-
-	def __str__(self):
-		return eventID.name + "," + category.category
-	
-class EventDetailForm(ModelForm):
-	class Meta:
-		model = EventDetail
-		fields = ['name', 'description', 'location', 'category', 'images', 'required',
-				  'start_date', 'end_date', 'start_time', 'end_time']
-		
-class CategoriesForm(ModelForm):
-	class Meta:
-		model = Category
-		fields = ['category', 'description']
 
 ################################ REMOVED #########################################
 
@@ -112,4 +76,26 @@ class EventMedia(models.Model):
 								on_delete = models.CASCADE)
 	images = models.ImageField(upload_to = "")
 	docs = models.FileField(upload_to = "")
+
+""" """
+class Organization(models.Model):
+	# PK (id) automatically added
+	name = models.CharField(max_length = 128)
+	description = models.TextField(max_length = 1024, blank = True)
+	owner = models.EmailField()
+	contact = models.TextField() #todo
+	image = models.ImageField(upload_to = "organizer_images") #todo
+	links = models.SlugField()
+	
+	def __str__(self):
+		return self.names
+
+class EventCategories(models.Model):
+	#primary key is the set of columns {eventID,category}
+	eventID = models.ForeignKey(EventDetail, on_delete = models.CASCADE) #is this ID?
+	category = models.ForeignKey(Category, on_delete = models.CASCADE)
+
+	def __str__(self):
+		return eventID.name + "," + category.category
+
 """

@@ -19,25 +19,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-
-
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = True
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
-}
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = '#8$jrs3hei9bybabvb2f4z7ogu@f=0=^+%b0wly496r*a%3%cn'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
+DEBUG = True
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
@@ -52,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages',
+    'boto',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -89,13 +79,11 @@ WSGI_APPLICATION = 'flow.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-#DATABASES = {
- #   'default': {
-  #      'ENGINE': 'django.db.backends.sqlite3',
-   #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    #}
-#}
-
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -139,12 +127,9 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-MEDIA_ROOT = "C:/Users/garnav/Documents/Flow/flow/flowdb/images/"
-MEDIA_URL = "/images/"
-
-#AWS_QUERYSTRING_AUTH = False
-#AWS_ACCESS_KEY_ID = config('BUCKETEER_AWS_ACCESS_KEY_ID')
-#AWS_SECRET_ACCESS_KEY = config('BUCKETEER_AWS_SECRET_ACCESS_KEY')
-#AWS_STORAGE_BUCKET_NAME = config('BUCKETEER_BUCKET_NAME')
-#MEDIA_URL = 'http://%s.s3.amazonaws.com/public/' % AWS_STORAGE_BUCKET_NAME
-#DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
+AWS_QUERYSTRING_AUTH = False
+AWS_ACCESS_KEY_ID = config('BUCKETEER_AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('BUCKETEER_AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('BUCKETEER_BUCKET_NAME')
+MEDIA_URL = 'http://%s.s3.amazonaws.com/public/' % AWS_STORAGE_BUCKET_NAME
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"

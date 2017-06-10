@@ -1,4 +1,6 @@
-import json, os, csv
+import json
+import os
+import csv
 
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -13,9 +15,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializers import EventSerializer, CategorySerializer
-from .models import EventDetail, Category, EventCategories, EventDetailForm, CategoriesForm
-from .forms import BulkUploadForm
-
+from .models import EventDetail, Category, EventCategories
+from .forms import BulkUploadForm, EventDetailForm, CategoriesForm
 
 def index(request):
     return JsonResponse("Hello, world. You're at the O-Week index.", safe = False)
@@ -82,12 +83,8 @@ def bulk_add(request):
 				event.end_date = row[5]
 				event.start_time = row[6]
 				event.end_time = row[7]
+				event.required = bool(row[8])
 				event.save()
-				
-				#EventCategories
-				eventCat = EventCategories()
-				eventCat.eventID = event
-				eventCat.category = cat_object
 	else:
 		form = BulkUploadForm()
 	return render(request, 'bulk_add.html', {'form': form})
