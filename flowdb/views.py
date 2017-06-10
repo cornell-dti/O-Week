@@ -1,8 +1,11 @@
+import json, os, csv
+
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from django.core.serializers.json import DjangoJSONEncoder
 from django.core import serializers
-import json, os, csv
+from django.conf import settings
+
+from wsgiref.util import FileWrapper
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -12,8 +15,6 @@ from rest_framework.views import APIView
 from .serializers import EventSerializer, CategorySerializer
 from .models import EventDetail, Category, EventCategories, EventDetailForm, CategoriesForm
 from .forms import BulkUploadForm
-from wsgiref.util import FileWrapper
-from django.conf import settings
 
 
 def index(request):
