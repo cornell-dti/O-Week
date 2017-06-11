@@ -1,6 +1,7 @@
 import json
 import os
 import csv
+import tempfile
 
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -13,6 +14,9 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from boto.s3.connection import S3Connection
+from boto.s3.key import Key
 
 from .serializers import EventSerializer, CategorySerializer
 from .models import EventDetail, Category
@@ -58,11 +62,20 @@ def categories(request):
 def eventImage(request, event_id):
 	try:
 		event = EventDetail.objects.filter(pk = event_id)[0].images.name #assumes that it returns a correct one for now
-		file_path = os.path.join(settings.MEDIA_ROOT, event)
-		with open(file_path, 'rb') as fh:
+		s3 = S3Connection(settings.AWS_ACCESS_KEY_ID, settings, AWS_SECRET_ACCESS_KEY)
+		s3bucket = s3.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+		s3key = s3bucket.get_key(event)
+		fp = tempfile.TemporaryFile()
+		s3file = s3key.get_file(fp)
+		with open(s3file, 'rb') as fh:
 			response = HttpResponse(fh.read(), status=status.HTTP_200_OK, content_type="image/jpg") #what if its not jpg
 			response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
 			return response
+#		file_path = os.path.join(settings.MEDIA_ROOT, event)
+#		with open(file_path, 'rb') as fh:
+#			response = HttpResponse(fh.read(), status=status.HTTP_200_OK, content_type="image/jpg") #what if its not jpg
+#			response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+#			return response
 	except:
 		return HttpResponse("",status = status.HTTP_400_BAD_REQUEST)
 	
