@@ -62,7 +62,7 @@ def categories(request):
 def eventImage(request, event_id):
 	#try:
 	event = EventDetail.objects.filter(pk = event_id)[0].images.name #assumes that it returns a correct one for now
-	s3 = S3Connection(settings.AWS_ACCESS_KEY_ID, settings, AWS_SECRET_ACCESS_KEY)
+	s3 = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
 	s3bucket = s3.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
 	s3key = s3bucket.get_key(event)
 	fp = tempfile.TemporaryFile()
