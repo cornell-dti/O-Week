@@ -69,6 +69,7 @@ def eventImage(request, event_id):
 	s3file = s3key.get_contents_to_file(fh)
 	response = HttpResponse(fh.read(), status=status.HTTP_200_OK, content_type="image/jpg") #what if its not jpg
 	response['Content-Disposition'] = 'inline; filename=' + event
+	print a
 	return response
 #		file_path = os.path.join(settings.MEDIA_ROOT, event)
 #		with open(file_path, 'rb') as fh:
