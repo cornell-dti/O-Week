@@ -66,8 +66,7 @@ def eventImage(request, event_id):
 	s3bucket = s3.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
 	s3key = s3bucket.get_key(event)
 	fh = tempfile.TemporaryFile()
-	s3file = s3key.get_file(fh)
-	#with open(fp, 'rb') as fh:
+	s3file = s3key.get_contents_to_file(fh)
 	response = HttpResponse(fh.read(), status=status.HTTP_200_OK, content_type="image/jpg") #what if its not jpg
 	response['Content-Disposition'] = 'inline; filename=' + event
 	return response
