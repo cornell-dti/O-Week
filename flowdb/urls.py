@@ -9,7 +9,7 @@ urlpatterns = [
 	url(r'^event/(?P<event_id>[0-9]+)/$', views.event_details, name='event details'),
 	url(r'^event/(?P<event_id>[0-9]+)/image$', views.eventImage, name='event image'),
 	url(r'^categories/$', views.categories, name='categories'),
-	url(r'^add_event/$', views.add_event, name='add'),
+	#url(r'^add_event/$', views.add_event, name='add'),
     url(r'^bulk_add_event/$', views.bulk_add, name='bulk add'),
-	url(r'^add_category/$', views.add_category, name='add category'),
+	#url(r'^add_category/$', views.add_category, name='add category'),
 ]

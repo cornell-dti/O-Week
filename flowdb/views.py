@@ -104,7 +104,6 @@ def bulk_add(request):
 				event_version.objID = event.pk
 				event_version.operation = 'ADD'
 				event_version.save()
-
 	else:
 		form = BulkUploadForm()
 	return render(request, 'bulk_add.html', {'form': form})
