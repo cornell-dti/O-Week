@@ -49,7 +49,7 @@ def event_details(request, event_id):
 		event = EventDetail.objects.filter(pk = event_id)[0]
 	except:
 		return JsonResponse({}, status=status.HTTP_400_BAD_REQUEST, safe = False)
-	serializer = EventSerializer(event)
+	serializer = EventSerializer(event, context = {'version': 9})
 	return JsonResponse(serializer.data, status=status.HTTP_200_OK, safe = False)
 
 @api_view(['GET'])

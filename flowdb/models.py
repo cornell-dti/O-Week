@@ -59,6 +59,7 @@ class EventTags(models.Model):
 	class Meta:
 		verbose_name_plural = "Event Tags"
 
+""" """
 class Version(models.Model):	
 	MODEL_CHOICES = (
 		('CAT', 'CATEGORY'),
