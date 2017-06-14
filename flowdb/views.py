@@ -19,7 +19,7 @@ from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 
 from .serializers import EventSerializer, CategorySerializer
-from .models import EventDetail, Category
+from .models import EventDetail, Category, Version
 from .forms import BulkUploadForm, EventDetailForm, CategoriesForm
 
 def index(request):
@@ -66,8 +66,8 @@ def eventImage(request, event_id):
 	s3bucket = s3.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
 	s3key = s3bucket.get_key(event)
 	fh = tempfile.TemporaryFile()
-	s3file = s3key.get_contents_as_string(fh)
-	response = HttpResponse(s3file, status=status.HTTP_200_OK, content_type="image/jpg") #what if its not jpg
+	s3file = s3key.get_contents_to_file(fh)
+	response = HttpResponse(fh.read(), status=status.HTTP_200_OK, content_type="image/jpg") #what if its not jpg
 	response['Content-Disposition'] = 'inline; filename=' + event
 	#print fh.read()
 	return response
@@ -98,27 +98,13 @@ def bulk_add(request):
 				event.end_time = row[7]
 				event.required = bool(row[8])
 				event.save()
+
+				event_version = Version()
+				event_version.model = 'EVE'
+				event_version.objID = event.pk
+				event_version.operation = 'ADD'
+				event_version.save()
+
 	else:
 		form = BulkUploadForm()
 	return render(request, 'bulk_add.html', {'form': form})
-			
-	
-def add_event(request):
-	if request.method == 'POST':
-		form = EventDetailForm(request.POST, request.FILES)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/thanks/')
-	else:
-		form = EventDetailForm()
-	return render(request, 'add.html', {'form': form})
-
-def add_category(request):
-	if request.method == 'POST':
-		form = CategoriesForm(request.POST, request.FILES)
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect('/thanks/')
-	else:
-		form = CategoriesForm()
-	return render(request, 'addCategory.html', {'form': form})

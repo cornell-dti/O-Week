@@ -59,3 +59,22 @@ class EventTags(models.Model):
 	class Meta:
 		verbose_name_plural = "Event Tags"
 
+class Version(models.Model):	
+	MODEL_CHOICES = (
+		('CAT', 'CATEGORY'),
+		('EVE', 'EVENTDETAIL')
+	)
+
+	OPERATION_CHOICES = (
+		('ADD', 'ADD'),
+		('MOD', 'MODIFY'),
+		('DEL', 'DELETED')
+	)
+
+	model = models.CharField(max_length = 3, choices = MODEL_CHOICES, editable = False)
+	objID = models.IntegerField(editable = False)
+	operation = models.CharField(max_length = 3, choices = OPERATION_CHOICES, editable = False)
+
+	def __str__(self):
+		return self.model + "," + str(self.objID) + "," + self.operation
+
