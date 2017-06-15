@@ -78,4 +78,3 @@ class Version(models.Model):
 
 	def __str__(self):
 		return self.model + "," + str(self.objID) + "," + self.operation
-

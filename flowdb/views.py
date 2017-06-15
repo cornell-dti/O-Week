@@ -49,7 +49,7 @@ def event_details(request, event_id):
 		event = EventDetail.objects.filter(pk = event_id)[0]
 	except:
 		return JsonResponse({}, status=status.HTTP_400_BAD_REQUEST, safe = False)
-	serializer = EventSerializer(event, context = {'version': 9})
+	serializer = EventSerializer(event)
 	return JsonResponse(serializer.data, status=status.HTTP_200_OK, safe = False)
 
 @api_view(['GET'])
@@ -69,16 +69,8 @@ def eventImage(request, event_id):
 	s3file = s3key.get_contents_to_file(fh)
 	response = HttpResponse(fh.read(), status=status.HTTP_200_OK, content_type="image/jpg") #what if its not jpg
 	response['Content-Disposition'] = 'inline; filename=' + event
-	#print fh.read()
 	return response
-#		file_path = os.path.join(settings.MEDIA_ROOT, event)
-#		with open(file_path, 'rb') as fh:
-#			response = HttpResponse(fh.read(), status=status.HTTP_200_OK, content_type="image/jpg") #what if its not jpg
-#			response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
-#			return response
-	#except:
-	#	return HttpResponse("",status = status.HTTP_400_BAD_REQUEST)
-	
+
 def bulk_add(request):
 	if request.method == 'POST':
 		form = BulkUploadForm(request.POST, request.FILES)
@@ -107,3 +99,54 @@ def bulk_add(request):
 	else:
 		form = BulkUploadForm()
 	return render(request, 'bulk_add.html', {'form': form})
+
+def versionedFeed(request, version):
+	catDict, eventDict = versionChanges(version)
+	changedCats = Category.objects.filter(pk__in=catDict['CHANGED'])
+	changedEvents = EventDetail.objects.filter(pk__in=eventDict['CHANGED'])
+	eventserializer = EventSerializer(changedCats, many = True)
+	catserializer = CategorySerializer(changedEvents, many = True)
+
+	return JsonResponse({
+							'events'	: {
+											'changed': eventserializer.data
+											'deleted': eventDict['DELETED']
+									  	  }
+							'categories': {
+											'changed': catserializer.data
+											'deleted': catDict['DELETED']
+										  }
+							'version' 	: Version.objects.latest('pk').pk
+						}
+						, status=status.HTTP_200_OK, safe = False)
+
+def versionChanges(version):
+	allChanges = Version.objects.filter(pk__gt = version).order_by('pk')
+	catDict = {'CHANGED':[], 'DELETED':[]}
+	eventDict = {'CHANGED':[], 'DELETED':[]}
+	for change in allChanges:
+		op = change.operation
+		if change.model == 'CAT' and op == 'DEL':
+			catDict = dictDeleted(catDict, change.objID)
+		elif change.model == 'CAT' and (op == 'MOD' or op == 'ADD'):
+			catDict = dictChanges(catDict, change.objID)
+		elif change.model == 'EVE' and op == 'DEL':
+			eventDict = dictDeleted(eventDict, change.objID)
+		elif change.model == 'EVE' and (op == 'MOD' or op == 'ADD'):
+			eventDict = dictChanges(eventDict, change.objID)
+	return catDict, eventDict
+
+def dictChanges(alterDict, objID):
+	if objID in alterDict['CHANGED']:
+		pass
+	else:
+		alterDict['CHANGED'] = alterDict['CHANGED'] + [objID]
+	return alterDict
+
+def dictDeleted(alterDict, objID):
+	if objID in alterDict['CHANGED']:
+		alterDict['CHANGED'].remove(objID)
+	else:
+		pass
+	alterDict['DELETED'] = alterDict['DELETED'] + [objID]
+	return alterDict

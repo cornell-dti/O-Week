@@ -1,0 +1,16 @@
+FAQ
+
+WARNING on Deleted Objects:
+#not nec. in the app at all
+
+Grouping by 'changed' and 'deleted':
+#alternative is to group by add, mod and del.
+#in order to do this would have to either need existing
+#pks from app, which is inefficient to provide in a request
+#object or need to recreate this from the database
+#(don't want to do this because we would always be doing
+#additional work: say the url is used at version 12 and then 14,
+#we would be recreating the history on the second call when it
+#was already created at 12 and this is magnified by the number of users)
+
+#instead the front-end can just be careful in using it the correct way
