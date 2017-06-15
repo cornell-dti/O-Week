@@ -1,4 +1,6 @@
-FAQ
+Using OWeekApp's API:
+
+Version-based Feed:
 
 WARNING on Deleted Objects:
 #not nec. in the app at all
