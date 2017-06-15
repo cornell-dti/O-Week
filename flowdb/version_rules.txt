@@ -14,3 +14,10 @@ Grouping by 'changed' and 'deleted':
 #was already created at 12 and this is magnified by the number of users)
 
 #instead the front-end can just be careful in using it the correct way
+
+
+version 0:
+just updates everything, faster so use this
+
+make it easier to see if there should be anything deleted,
+keep local metadata on which pk of events and categories exist

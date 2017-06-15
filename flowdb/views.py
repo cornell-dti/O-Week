@@ -106,16 +106,15 @@ def versionedFeed(request, version):
 	changedEvents = EventDetail.objects.filter(pk__in=eventDict['CHANGED'])
 	eventserializer = EventSerializer(changedCats, many = True)
 	catserializer = CategorySerializer(changedEvents, many = True)
-
 	return JsonResponse({
 							'events'	: {
-											'changed': eventserializer.data
+											'changed': eventserializer.data,
 											'deleted': eventDict['DELETED']
-									  	  }
+									  	  },
 							'categories': {
-											'changed': catserializer.data
+											'changed': catserializer.data,
 											'deleted': catDict['DELETED']
-										  }
+										  },
 							'version' 	: Version.objects.latest('pk').pk
 						}
 						, status=status.HTTP_200_OK, safe = False)
