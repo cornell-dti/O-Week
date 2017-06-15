@@ -9,7 +9,7 @@ class BulkUploadForm(forms.Form):
 class EventDetailForm(ModelForm):
 	class Meta:
 		model = EventDetail
-		fields = ['name', 'description', 'location', 'category', 'images', #'required',
+		fields = ['name', 'description', 'location', 'category', 'images', 'required',
 				  'start_date', 'end_date', 'start_time', 'end_time']
 		
 class CategoriesForm(ModelForm):

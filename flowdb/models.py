@@ -32,7 +32,7 @@ class EventDetail(models.Model):
 	location = models.TextField(max_length = 256)
 	category = models.ForeignKey(Category) #cascade?
 	generated = models.DateTimeField(auto_now = True)
-	#required = models.BooleanField(default = False)
+	required = models.BooleanField(default = False)
 	
 	#Added post table alterations
 	images = models.ImageField(upload_to = "event_images") 
