@@ -10,10 +10,10 @@ def add_mod_version(model, obj, change):
 
 	if model == CAT:
 		version.model = CAT
-		version.objID = Category.objects.latest('pk').pk
+		version.objID = obj.pk
 	elif model == EVE:
 		version.model = EVE
-		version.objID = EventDetail.objects.latest('pk').pk
+		version.objID = obj.pk
 
 	if not change:
 		version.operation = 'ADD'
