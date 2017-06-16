@@ -60,7 +60,6 @@ def categories(request):
 
 @api_view(['GET'])
 def eventImage(request, event_id):
-	#try:
 	event = EventDetail.objects.filter(pk = event_id)[0].images.name #assumes that it returns a correct one for now
 	s3 = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
 	s3bucket = s3.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
@@ -104,8 +103,8 @@ def versionedFeed(request, version):
 	catDict, eventDict = versionChanges(version)
 	changedCats = Category.objects.filter(pk__in=catDict['CHANGED'])
 	changedEvents = EventDetail.objects.filter(pk__in=eventDict['CHANGED'])
-	eventserializer = EventSerializer(changedCats, many = True)
-	catserializer = CategorySerializer(changedEvents, many = True)
+	eventserializer = EventSerializer(changedEvents, many = True)
+	catserializer = CategorySerializer(changedCats, many = True)
 	return JsonResponse({
 							'events'	: {
 											'changed': eventserializer.data,

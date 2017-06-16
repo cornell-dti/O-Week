@@ -1,25 +1,29 @@
-Using OWeekApp's API:
+Notes on Version-based Feed:
 
-Version-based Feed:
+1. WARNING on Deleted Objects:
+The objects identified to have been deleted by the database, as identified by
+their primary keys may not be locally stored on the device. For example, consider
+a device running a version i of the app. The database is currently on version j,
+where j >> i. An event could have been added to update the database to version k,
+where j > k > i. This event could then be deleted to create version k' of the 
+database, where j > k' > k > i. In this case, this event would not be
+stored on the device but would be shown to have been deleted by the database. 
 
-WARNING on Deleted Objects:
-#not nec. in the app at all
+2. Grouping by 'changed' and 'deleted':
+Instead of grouping objects of each type by the ones
+modified, added and deleted post the most recent local version,
+these objects are grouped by those that have been changed (added or modified)
+or deleted.
 
-Grouping by 'changed' and 'deleted':
-#alternative is to group by add, mod and del.
-#in order to do this would have to either need existing
-#pks from app, which is inefficient to provide in a request
-#object or need to recreate this from the database
-#(don't want to do this because we would always be doing
-#additional work: say the url is used at version 12 and then 14,
-#we would be recreating the history on the second call when it
-#was already created at 12 and this is magnified by the number of users)
+The latter approach was not chosen because grouping events by these
+categories would require effectively recreating the information
+stored locally based on the version history present on the database. This would
+be achieved by iterating through past version to recreate the current state
+of data on the device. Doing this each time the device requests updated
+data is extremely inefficient. Alternatively, this could be done by 
+forcing the device running the app to send the primary keys of events 
+it currently holds, which is unfeasible.
 
-#instead the front-end can just be careful in using it the correct way
-
-
-version 0:
-just updates everything, faster so use this
-
-make it easier to see if there should be anything deleted,
-keep local metadata on which pk of events and categories exist
+To enable the output json string to be used efficiently, I would
+strongly suggest keepig the primary keys of categories and events
+objects stored locally as metadata.
