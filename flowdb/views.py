@@ -16,7 +16,6 @@ from wsgiref.util import FileWrapper
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
