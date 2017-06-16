@@ -48,7 +48,7 @@ class EventDetailAdmin(admin.ModelAdmin):
 		add_mod_version(EVE, obj, change)
 
 	def delete_model(request, obj):
-		obj.delete()
+		super(EventDetailAdmin, self).delete_model(request, obj) 
 		delete_version(EVE, obj)
 
 admin.site.register(Category, CategoryAdmin)
