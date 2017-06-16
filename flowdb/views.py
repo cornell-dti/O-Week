@@ -33,12 +33,8 @@ def feed(request, day, req_category = "NONE"):
             event_set = EventDetail.objects.filter(start_date__day = str(day)) #because its a five day event
         else:
             cat_object = Category.objects.filter(category = req_category)
-            corr_events = EventCategories.objects.filter(category = cat_object).values_list()
-            event_set = EventDetail.objects.none()
-            allDetails = EventDetail.objects.filter(start_date__day = str(day))
-            for event in corr_events:
-                spec_event = allDetails.filter(id = event)
-                event_set.union(spec_event)
+            corr_events = EventDetail.objects.filter(category = cat_object)
+            event_set = corr_events.filter(start_date__day = str(day))
             
         serializer = EventSerializer(event_set, many = True)
         return JsonResponse(serializer.data, status=status.HTTP_200_OK, safe = False)
