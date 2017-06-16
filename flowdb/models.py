@@ -1,3 +1,7 @@
+# models.py
+# Arnav Ghosh
+# 16th June 2017
+
 from __future__ import unicode_literals
 
 from django.db import models

@@ -1,3 +1,7 @@
+# admin.py
+# Arnav Ghosh
+# 16th June 2017
+
 from django.contrib import admin
 from .models import Category, EventDetail, Tag, EventTags, Version
 # Register your models here.

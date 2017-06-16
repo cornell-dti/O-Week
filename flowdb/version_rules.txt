@@ -1,12 +1,12 @@
 Notes on Version-based Feed:
 
 1. WARNING on Deleted Objects:
-The objects identified to have been deleted by the database, as identified by
-their primary keys may not be locally stored on the device. For example, consider
-a device running a version i of the app. The database is currently on version j,
+The objects identified to have been deleted by the database, identified by
+their primary keys, may not actually be stored on the device. For example, consider
+a device running version i of the app. The database is currently on version j,
 where j >> i. An event could have been added to update the database to version k,
 where j > k > i. This event could then be deleted to create version k' of the 
-database, where j > k' > k > i. In this case, this event would not be
+database, where j > k' > k > i. In this case, the event would not be
 stored on the device but would be shown to have been deleted by the database. 
 
 2. Grouping by 'changed' and 'deleted':
@@ -24,6 +24,6 @@ data is extremely inefficient. Alternatively, this could be done by
 forcing the device running the app to send the primary keys of events 
 it currently holds, which is unfeasible.
 
-To enable the output json string to be used efficiently, I would
-strongly suggest keepig the primary keys of categories and events
+To enable the output jSON string to be used efficiently, I would
+strongly suggest keeping the primary keys of categories and events
 objects stored locally as metadata.

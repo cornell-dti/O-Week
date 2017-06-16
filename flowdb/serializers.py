@@ -1,3 +1,7 @@
+# serializers.py
+# Arnav Ghosh
+# 16th June 2017
+
 from rest_framework import serializers
 from .models import EventDetail, Category
 

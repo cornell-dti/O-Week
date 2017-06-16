@@ -1,0 +1,40 @@
+{
+  "version": 12,
+  "categories": {
+    "deleted": [1,2],
+    "changed": [
+      {
+        "pk": 3,
+        "category": "ENGR",
+        "description": "Testing Modification of Categories, second time."
+      },
+      {
+        "pk": 6,
+        "category": "Greek Life",
+        "description": "What is greek life like on campus?"
+      },
+      {
+        "pk": 7,
+        "category": "Testing Add after change",
+        "description": "Testing add after change"
+      }
+    ]
+  },
+  "events": {
+    "deleted": [1,2],
+    "changed": [
+      {
+        "pk": 3,
+        "name": "Meet the Greeks for New Students and Families",
+        "description": "Cornell is host to one of the nation’s largest and most notable fraternity and sorority\r\ncommunities. This session is an opportunity to learn more about these organizations and\r\nmeet current student leaders in the Greek community and staff members from the Office of\r\nFraternities, Sororities, and Independent Living.",
+        "location": "Lewis Auditorium, G76 Goldwin Smith Hall",
+        "category": 6,
+        "start_date": "2017-08-19",
+        "end_date": "2017-08-19",
+        "start_time": "14:00:00",
+        "end_time": "15:00:00",
+        "required": false
+      }
+    ]
+  }
+}

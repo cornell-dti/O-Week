@@ -1,0 +1,61 @@
+API Changes:
+
+1. Category objects shown in jSON objects have a new key, 
+   'pk' added:
+	{category : 'Logistics', 'description' : 'Test'}
+						will now be
+	{pk : 1, category : 'Logistics', 'description' : 'Test'}
+
+2. Event objects shown in jSON have integer values for the
+   key 'category' as opposed to using strings. The integers
+   correspond to the primary key of the category they represent
+   {pk : 2, name : "test" ... , category : 'Logistics', ...} 
+						will now be
+   {pk : 2, name : "test" ... , category : 1, ...} 			
+
+3. Updates to any events are visible using the following url:
+   https://oweekapp.herokuapp.com/flow/version/<local_version>
+   where local_version is the version of the database stored on the device.
+
+   a. The first time data is downloaded, use local_version = 0
+   b. For downloading any event or category data, I'd suggest solely using this
+      url. This is mainly because the other ones provided (eg: feed/<day>) give no
+      indication of what updates should be present on the device and thus, could
+      lead to inconsistent data.
+   c. A sample jSON response is in the other document I've uploaded. 
+   	  version_rules.txt delves into some more design choices, if you're curious.
+
+   A summary of the jSON response:
+
+   The response has 3 main keys: 'version', 'events', 'categories'. 
+
+   'version' is the database's version and once the all the data in 
+   the response is reflected in the device, the version the local 
+   'database' will be in. 
+
+   'events' is further divided into two key-value pairs: 'changed', 'deleted'.
+
+   'deleted' is a list of integers that identifies the pks of the event objects deleted
+   between local_version and the most recent version on the database. Importantly,
+   it is entirely possible that an event object in this list many not be in the local 
+   database at all.
+
+   'changed' is a list of the events that have been added or modified. This is not a 
+   list of pks but instead a list of event objects in jSON form.
+
+   'categories' is similar to events but for category objects.
+
+4. Everyone should be able to access the database using the following details:
+   url: https://oweekapp.herokuapp.com/admin
+   username: oweekadmin
+   password: oweekapp
+
+   Feel free to add to the Event Details Tables in case you need to test anything
+   in particular. 
+
+   CAUTION: 
+   - DON'T delete any items from the Versions Table. Doing so would cause
+   the loss of updates that should be shown in the app. When the final version
+   of the app is released, this table will be hidden from view in the admin interface.
+   - DON'T delete any items from the Categories Table. Modifying them is fine though.
+
