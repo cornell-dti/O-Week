@@ -39,7 +39,7 @@ class CategoryAdmin(admin.ModelAdmin):
 		add_mod_version(CAT, obj, change)
 
 	def delete_model(request, obj):
-		super(CategoryAdmin, self).delete_model(request, obj)
+		obj.delete() #hack
 		delete_version(CAT, obj)
 
 class EventDetailAdmin(admin.ModelAdmin):
@@ -48,7 +48,7 @@ class EventDetailAdmin(admin.ModelAdmin):
 		add_mod_version(EVE, obj, change)
 
 	def delete_model(request, obj):
-		super(EventDetailAdmin, self).delete_model(request, obj) 
+		obj.delete() #hack
 		delete_version(EVE, obj)
 
 admin.site.register(Category, CategoryAdmin)
