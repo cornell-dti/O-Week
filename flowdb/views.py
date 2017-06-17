@@ -11,8 +11,6 @@ from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.conf import settings
 
-from wsgiref.util import FileWrapper
-
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -96,19 +94,29 @@ def bulk_add(request):
 	return render(request, 'bulk_add.html', {'form': form})
 
 def versionedFeed(request, version):
-	catDict, eventDict = versionChanges(version)
-	changedCats = Category.objects.filter(pk__in=catDict['CHANGED'])
-	changedEvents = EventDetail.objects.filter(pk__in=eventDict['CHANGED'])
+	if version == 0:
+		changedCats = Category.objects.all()
+		changedEvents = EventDetail.objects.all()
+		deletedCats = []
+		deletedEvents = []
+	else:
+		catDict, eventDict = versionChanges(version)
+		changedCats = Category.objects.filter(pk__in=catDict['CHANGED'])
+		changedEvents = EventDetail.objects.filter(pk__in=eventDict['CHANGED'])
+		deletedCats = catDict['DELETED']
+		deletedEvents = eventDict['DELETED']
+
 	eventserializer = EventSerializer(changedEvents, many = True)
 	catserializer = CategorySerializer(changedCats, many = True)
+	
 	return JsonResponse({
 							'events'	: {
 											'changed': eventserializer.data,
-											'deleted': eventDict['DELETED']
+											'deleted': deletedEvents
 									  	  },
 							'categories': {
 											'changed': catserializer.data,
-											'deleted': catDict['DELETED']
+											'deleted': deletedCats
 										  },
 							'version' 	: Version.objects.latest('pk').pk
 						}
