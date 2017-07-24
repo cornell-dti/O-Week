@@ -72,8 +72,8 @@ def bulk_add(request):
 			dataReader = csv.reader(csvFile, delimiter=',', quotechar='"')
 			for row in dataReader:
 				event = EventDetail()
-				event.name = row[0]
-				event.description = row[1]
+				event.name = row[0].decode('utf-8')
+				event.description = row[1].decode('utf-8')
 				event.location = row[2]
 				cat_object = Category.objects.filter(category = row[3])[0]
 				event.category = cat_object
