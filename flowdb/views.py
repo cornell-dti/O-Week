@@ -69,11 +69,11 @@ def bulk_add(request):
 		form = BulkUploadForm(request.POST, request.FILES)
 		if form.is_valid():
 			csvFile = form.cleaned_data['csvFile']
-			dataReader = csv.reader(csvFile, delimiter=',', quotechar='"')
+			dataReader = csv.reader(csvFile, delimiter=',', quotechar='"', encoding='utf-8')
 			for row in dataReader:
 				event = EventDetail()
 				event.name = row[0]
-				event.description = row[1]
+				event.description = row[1].encode('utf-8')
 				event.location = row[2]
 				cat_object = Category.objects.filter(category = row[3])[0]
 				event.category = cat_object

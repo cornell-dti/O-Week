@@ -31,9 +31,9 @@ class Tag(models.Model):
 """ """
 class EventDetail(models.Model):
 	# PK (id) automatically added
-	name = models.CharField(max_length = 128)
-	description = models.TextField(max_length = 1024, blank = True)
-	location = models.TextField(max_length = 256)
+	name = models.CharField(max_length = 512)
+	description = models.TextField(max_length = 5096, blank = True)
+	location = models.TextField(max_length = 512)
 	category = models.ForeignKey(Category) #cascade?
 	generated = models.DateTimeField(auto_now = True)
 	required = models.BooleanField(default = False)
