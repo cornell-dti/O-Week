@@ -71,6 +71,7 @@ def bulk_add(request):
 			csvFile = form.cleaned_data['csvFile']
 			dataReader = csv.reader(csvFile, delimiter=',', quotechar='"')
 			for row in dataReader:
+				temp_desc = row[1]
 				event = EventDetail()
 				event.name = row[0]
 				event.description = row[1].decode('utf-8')
