@@ -23,7 +23,7 @@ from .models import EventDetail, Category, Version
 from .forms import BulkUploadForm, EventDetailForm, CategoriesForm
 
 def index(request):
-    return JsonResponse("Hello, world. You're at the O-Week index.", safe = False)
+    return JsonResponse("Hello, world. You're at the O-Week index. Get ready to be awed", safe = False)
 
 @api_view(['GET'])
 def feed(request, day, req_category = "NONE"):

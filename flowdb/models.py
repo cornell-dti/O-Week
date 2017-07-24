@@ -39,7 +39,7 @@ class EventDetail(models.Model):
 	required = models.BooleanField(default = False)
 	
 	#Added post table alterations
-	images = models.ImageField(upload_to = "event_images") 
+	images = models.ImageField(upload_to = "event_images", blank = True) 
 	start_date = models.DateField()
 	end_date = models.DateField()
 	start_time = models.TimeField()
