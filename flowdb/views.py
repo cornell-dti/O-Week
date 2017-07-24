@@ -69,7 +69,7 @@ def bulk_add(request):
 		form = BulkUploadForm(request.POST, request.FILES)
 		if form.is_valid():
 			csvFile = form.cleaned_data['csvFile']
-			dataReader = csv.reader(csvFile, delimiter=',', quotechar='"', encoding='utf-8')
+			dataReader = csv.reader(csvFile, delimiter=',', quotechar='"')
 			for row in dataReader:
 				event = EventDetail()
 				event.name = row[0]
