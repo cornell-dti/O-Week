@@ -22,6 +22,18 @@ from .serializers import EventSerializer, CategorySerializer
 from .models import EventDetail, Category, Version
 from .forms import BulkUploadForm, EventDetailForm, CategoriesForm
 
+def unicode_csv_reader(unicode_csv_data, dialect=csv.excel, **kwargs):
+    # csv.py doesn't do Unicode; encode temporarily as UTF-8:
+    csv_reader = csv.reader(utf_8_encoder(unicode_csv_data),
+                            dialect=dialect, **kwargs)
+    for row in csv_reader:
+        # decode UTF-8 back to Unicode, cell by cell:
+        yield [unicode(cell, 'utf-8') for cell in row]
+
+def utf_8_encoder(unicode_csv_data):
+    for line in unicode_csv_data:
+        yield line.encode('utf-8')
+
 def index(request):
     return JsonResponse("Hello, world. You're at the O-Week index. Get ready to be awed", safe = False)
 
@@ -69,7 +81,7 @@ def bulk_add(request):
 		form = BulkUploadForm(request.POST, request.FILES)
 		if form.is_valid():
 			csvFile = form.cleaned_data['csvFile']
-			dataReader = csv.unicode_csv_reader(csvFile, delimiter=',', quotechar='"')
+			dataReader = unicode_csv_reader(csvFile, delimiter=',', quotechar='"')
 			for row in dataReader:
 				event = EventDetail()
 				event.name = row[0]
