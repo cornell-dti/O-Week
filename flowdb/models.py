@@ -47,8 +47,8 @@ class EventDetail(models.Model):
 	start_time = models.TimeField()
 	end_time = models.TimeField()
 	
-	#def __str__(self):
-		#return self.name + " (" + self.start_date.strftime('%m/%d/%Y') + ")"
+	def __str__(self):
+		return self.name + " (" + self.start_date.strftime('%m/%d/%Y') + ")"
 
 	class Meta:
 		verbose_name_plural = "Event Details"
