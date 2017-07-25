@@ -34,7 +34,7 @@ class EventDetail(models.Model):
 	name = models.CharField(max_length = 512)
 	description = models.TextField(max_length = 5096, blank = True)
 	location = models.TextField(max_length = 512)
-	latitute = models.DecimalField(max_digits = 10, decimal_places = 7)
+	latitude = models.DecimalField(max_digits = 10, decimal_places = 7)
 	longitude = models.DecimalField(max_digits = 10, decimal_places = 7)
 	category = models.ForeignKey(Category) #cascade?
 	generated = models.DateTimeField(auto_now = True)
@@ -47,8 +47,8 @@ class EventDetail(models.Model):
 	start_time = models.TimeField()
 	end_time = models.TimeField()
 	
-	#def __str__(self):
-	#	return self.name + " (" + self.start_date.strftime('%m/%d/%Y') + ")"
+	def __str__(self):
+		return self.name + " (" + self.start_date.strftime('%m/%d/%Y') + ")"
 
 	class Meta:
 		verbose_name_plural = "Event Details"
