@@ -34,8 +34,8 @@ class EventDetail(models.Model):
 	name = models.CharField(max_length = 512)
 	description = models.TextField(max_length = 5096, blank = True)
 	location = models.TextField(max_length = 512)
-	latitute = models.DecimalField()
-	longitude = models.DecimalField()
+	latitute = models.DecimalField(max_digits = 7)
+	longitude = models.DecimalField(max_digits = 7)
 	category = models.ForeignKey(Category) #cascade?
 	generated = models.DateTimeField(auto_now = True)
 	required = models.BooleanField(default = False)
