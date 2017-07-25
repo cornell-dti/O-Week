@@ -9,7 +9,8 @@ class EventSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = EventDetail
-        fields = ('pk', 'name', 'description', 'location', 'category', 'start_date', 'end_date', 'start_time', 'end_time', 'required')
+        fields = ('pk', 'name', 'description', 'location', 'latitude', 'longitude', 'category', 'start_date',
+				  'end_date', 'start_time', 'end_time', 'required')
         
 class CategorySerializer(serializers.ModelSerializer):
 	

@@ -72,18 +72,21 @@ def bulk_add(request):
 			csvFile = form.cleaned_data['csvFile']
 			dataReader = csv.reader(csvFile, delimiter=',', quotechar='"')
 			for row in dataReader:
-				temp_desc = row[1]
 				event = EventDetail()
 				event.name = row[0]
 				event.description = row[1].decode('utf-8')
 				event.location = row[2]
-				cat_object = Category.objects.filter(category = row[3])[0]
+				
+				event.latitude = row[3]
+				event.longitude = row[4]
+				
+				cat_object = Category.objects.filter(category = row[5])[0]
 				event.category = cat_object
-				event.start_date = row[4]
-				event.end_date = row[5]
-				event.start_time = row[6]
-				event.end_time = row[7]
-				event.required = bool(row[8])
+				event.start_date = row[6]
+				event.end_date = row[7]
+				event.start_time = row[8]
+				event.end_time = row[9]
+				event.required = bool(row[10])
 				event.save()
 
 				event_version = Version()
