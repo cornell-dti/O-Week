@@ -47,6 +47,7 @@ class CategoryAdmin(admin.ModelAdmin):
 		delete_version(CAT, obj)
 
 class EventDetailAdmin(admin.ModelAdmin):
+	
 	def save_model(self, request, obj, form, change):
 		super(EventDetailAdmin, self).save_model(request, obj, form, change)
 		add_mod_version(EVE, obj, change)

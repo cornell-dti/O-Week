@@ -86,7 +86,7 @@ def bulk_add(request):
 				event.end_date = row[7]
 				event.start_time = row[8]
 				event.end_time = row[9]
-				event.required = bool(row[10])
+				event.required = bool(int(row[10]))
 				event.save()
 
 				event_version = Version()
