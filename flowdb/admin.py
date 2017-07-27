@@ -55,6 +55,16 @@ class EventDetailAdmin(admin.ModelAdmin):
 	def delete_model(request, obj):
 		obj.delete() #hack
 		delete_version(EVE, obj)
+		
+class AddInfoAdmin(admin.ModelAdmin):
+	
+	def save_model(self, request, obj, form, change):
+		super(AddInfoAdmin, self).save_model(request, obj, form, change)
+		add_mod_version(EVE, obj.eventID, change)
+
+	def delete_model(request, obj):
+		obj.delete() #hack
+		add_mod_version(EVE, obj.eventID, True)
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(EventDetail, EventDetailAdmin)

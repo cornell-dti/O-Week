@@ -74,19 +74,21 @@ def bulk_add(request):
 			for row in dataReader:
 				event = EventDetail()
 				event.name = row[0]
-				event.description = row[1].decode('utf-8')
-				event.location = row[2]
+				event.description = row[1]
+				event.additional = row[2]
+				event.location = row[3]
 				
-				event.latitude = row[3]
-				event.longitude = row[4]
+				event.latitude = row[4]
+				event.longitude = row[5]
 				
-				cat_object = Category.objects.filter(category = row[5])[0]
+				cat_object = Category.objects.filter(category = row[6])[0]
 				event.category = cat_object
-				event.start_date = row[6]
-				event.end_date = row[7]
-				event.start_time = row[8]
-				event.end_time = row[9]
-				event.required = bool(int(row[10]))
+				event.start_date = row[7]
+				event.end_date = row[8]
+				event.start_time = row[9]
+				event.end_time = row[10]
+				event.required = bool(int(row[11]))
+				event.category_required = bool(int(row[12]))
 				event.save()
 
 				event_version = Version()

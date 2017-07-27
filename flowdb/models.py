@@ -33,12 +33,14 @@ class EventDetail(models.Model):
 	# PK (id) automatically added
 	name = models.CharField(max_length = 512)
 	description = models.TextField(max_length = 5096, blank = True)
+	additional = models.TextField(max_length = 5096, blank = True)
 	location = models.TextField(max_length = 512)
 	latitude = models.DecimalField(max_digits = 10, decimal_places = 7)
 	longitude = models.DecimalField(max_digits = 10, decimal_places = 7)
 	category = models.ForeignKey(Category) #cascade?
 	generated = models.DateTimeField(auto_now = True)
 	required = models.BooleanField(default = False)
+	category_required = models.BooleanField(default = False)
 	
 	#Added post table alterations
 	images = models.ImageField(upload_to = "event_images", blank = True) 
