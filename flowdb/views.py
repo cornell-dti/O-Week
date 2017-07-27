@@ -75,6 +75,13 @@ def upload_categories(request):
 				new_category = Category()
 				new_category.category = row[0]
 				new_category.description= row[1]
+				new_category.save()
+				
+				cat_version = Version()
+				cat_version.model = 'CAT'
+				cat_version.objID = new_category.pk
+				cat_version.operation = 'ADD'
+				cat_version.save()
 	else:
 		form = BulkUploadForm()
 	return render(request, 'bulk_categories.html', {'form': form})
