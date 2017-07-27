@@ -19,7 +19,7 @@
     	
     	<!-- BEGIN UPLOAD FORM -->
 		<div class="w3-container w3-margin-left">
-			<form action="/flow/bulk_images/" method="post" enctype="multipart/form-data" data-ajax="false">
+			<form action="/flow/bulk_image/" method="post" enctype="multipart/form-data" data-ajax="false">
     			{% csrf_token %}
     			{{ form.as_p}}
     			<input type="submit" value="Submit" />
