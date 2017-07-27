@@ -71,7 +71,7 @@ def image_for_all(request):
 		if form.is_valid():
 			events = EventDetail.objects.all()
 			for event in events:
-				event.images = request.FILES['file']
+				event.images = request.FILES['csvfile']
 				event.save()
 	else:
 		form = BulkUploadForm()
