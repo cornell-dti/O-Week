@@ -47,6 +47,7 @@ class CategoryAdmin(admin.ModelAdmin):
 		delete_version(CAT, obj)
 
 class EventDetailAdmin(admin.ModelAdmin):
+	list_display = ('name', 'location', 'required')
 	
 	def save_model(self, request, obj, form, change):
 		super(EventDetailAdmin, self).save_model(request, obj, form, change)
