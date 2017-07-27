@@ -16,4 +16,5 @@ urlpatterns = [
 	url(r'^categories/$', views.categories, name='categories'),
     url(r'^bulk_add_event/$', views.bulk_add, name='bulk add'),
 	url(r'^bulk_add_categories/$', views.upload_categories, name='bulk categories'),
+	url(r'^bulk_image/$', views.image_for_all, name='bulk image upload'),
 ]

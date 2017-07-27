@@ -65,6 +65,18 @@ def eventImage(request, event_id):
 	response['Content-Disposition'] = 'inline; filename=' + event
 	return response
 
+def image_for_all(request):
+	if request.method == 'POST':
+		form = BulkUploadForm(request.POST, request.FILES)
+		if form.is_valid():
+			events = EventDetail.objects.all()
+			for event in events:
+				event.images = request.FILES['file']
+				event.save()
+	else:
+		form = BulkUploadForm()
+	return render(request, 'bulk_images.html', {'form': form})
+
 def upload_categories(request):
 	if request.method == 'POST':
 		form = BulkUploadForm(request.POST, request.FILES)
@@ -72,7 +84,7 @@ def upload_categories(request):
 			csvFile = form.cleaned_data['csvFile']
 			dataReader = csv.reader(csvFile, delimiter=',', quotechar='"')
 			for row in dataReader:
-				new_category = Category()
+				new_category = Category() 
 				new_category.category = row[0]
 				new_category.description= row[1]
 				new_category.save()
