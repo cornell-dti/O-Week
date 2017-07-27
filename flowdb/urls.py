@@ -15,4 +15,5 @@ urlpatterns = [
 	url(r'^event/(?P<event_id>[0-9]+)/image$', views.eventImage, name='event image'),
 	url(r'^categories/$', views.categories, name='categories'),
     url(r'^bulk_add_event/$', views.bulk_add, name='bulk add'),
+	url(r'^bulk_add_categories/$', views.upload_categories, name='bulk categories'),
 ]

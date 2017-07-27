@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>Bulk Category Additions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'w3.css' %}">
+    </head>
+
+    <body>
+
+        <!-- BEGIN PAGE TITLE -->
+        <div class="w3-container w3-teal">
+            <h1 style=text-align:center>Bulk Category Additions</h1>
+        </div>
+        <!-- END PAGE TITLE -->
+    	
+    	<!-- BEGIN UPLOAD FORM -->
+		<div class="w3-container w3-margin-left">
+			<form action="/flow/bulk_add_categories/" method="post" enctype="multipart/form-data" data-ajax="false">
+    			{% csrf_token %}
+    			{{ form.as_p}}
+    			<input type="submit" value="Submit" />
+			</form>
+		</div>
+		<!-- END UPLOAD FORM -->
+
+	</body>
+
+</html>
+
+
+
