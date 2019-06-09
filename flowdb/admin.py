@@ -3,7 +3,7 @@
 # 16th June 2017
 
 from django.contrib import admin
-from .models import Category, EventDetail, Tag, EventTags, Version
+from .models import Category, EventDetail, Tag, EventTags, Version, Resource, Date
 # Register your models here.
 
 CAT = 'CAT'
@@ -62,4 +62,6 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(EventDetail, EventDetailAdmin)
 admin.site.register(Tag)
 admin.site.register(EventTags)
-admin.site.register(Version)  # for now
+admin.site.register(Version)
+admin.site.register(Resource)
+admin.site.register(Date)

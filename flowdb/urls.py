@@ -19,5 +19,5 @@ urlpatterns = [
     url(r'^bulk_add_categories/$', views.upload_categories, name='bulk categories'),
     url(r'^bulk_image/$', views.image_for_all, name='bulk image upload'),
     url(r'^dates/$', views.dates, name='dates in orientation'),
-    url(r'^resources/$', views.resources, name='name and description of resources')
+    url(r'^resources/$', views.resources, name='name and link of resources')
 ]

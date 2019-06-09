@@ -5,23 +5,11 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import EventDetail, Category, Resource, Date
+from .models import EventDetail, Category
 
 
 class BulkUploadForm(forms.Form):
     csvFile = forms.FileField()
-
-
-class DateForm(ModelForm):
-    class Meta:
-        model = Date
-        fields = ['date']
-
-
-class ResourceForm(ModelForm):
-    class Meta:
-        model = Resource
-        fields = ['name', 'link']
 
 
 class EventDetailForm(ModelForm):
