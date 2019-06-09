@@ -19,4 +19,3 @@ with open('locations.csv', 'rb') as csvFile:
 			lat = json_resp["results"][0]["geometry"]["location"]["lat"]
 			longitude = json_resp["results"][0]["geometry"]["location"]["lng"]
 			dataWriter.writerow([row[0], lat, longitude])
-		
