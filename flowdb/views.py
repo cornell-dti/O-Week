@@ -6,7 +6,7 @@ import csv
 
 from boto.s3.connection import S3Connection
 from django.conf import settings
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -25,14 +25,14 @@ def index(request):
 def dates(request):
     all_dates = Date.objects.all()
     serializer = DateSerializer(all_dates, many=True)
-    return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+    return JsonResponse(serializer.data, status=status.HTTP_200_OK, safe=False)
 
 
 @api_view(['GET'])
 def resources(request):
     all_resources = Resource.objects.all()
     serializer = ResourceSerializer(all_resources, many=True)
-    return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+    return JsonResponse(serializer.data, status=status.HTTP_200_OK, safe=False)
 
 
 @api_view(['GET'])
@@ -81,6 +81,9 @@ def eventImage(request, event_id):
 
 
 def image_for_all(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+
     if request.method == 'POST':
         form = BulkUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -94,6 +97,9 @@ def image_for_all(request):
 
 
 def upload_categories(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+
     if request.method == 'POST':
         form = BulkUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -116,6 +122,9 @@ def upload_categories(request):
 
 
 def bulk_add(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+
     if request.method == 'POST':
         form = BulkUploadForm(request.POST, request.FILES)
         if form.is_valid():
